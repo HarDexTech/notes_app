@@ -102,17 +102,22 @@ input {
     transition: none;
   }
 }
-.shake{
+.shake {
   animation: shake infinite ease-in-out 350ms;
 }
-@keyframes shake{
-  0%,100% {
+@keyframes shake {
+  0%,
+  100% {
     transform: translateX(0);
   }
-  50%{
+  50% {
     transform: translateX(-10px);
   }
-  75%{
+  75% {
     transform: translateX(20px);
   }
+}
+.noteContainer {
+  scrollbar-width: none;
+  scrollbar-color: #3525cd transparent;
 }

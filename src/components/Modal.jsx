@@ -1,6 +1,8 @@
 export default function Modal(props) {
   return (
-    <section className={`modal animate-modal-overlay h-screen w-full flex items-center justify-center fixed z-10 bg-[#111518]/60 ${props.showModal ? '' : 'hidden'}`}>
+    <section
+      className={`modal animate-modal-overlay h-screen w-full flex items-center justify-center fixed z-10 bg-[#111518]/60`}
+    >
       <div className="h-fit w-[80vw] sm:w-100 bg-white shadow rounded-2xl flex flex-col items-center pb-20 pt-10 px-5 justify-around gap-5 animate-modal-panel">
         <div className="flex flex-col items-center">
           <span className="bg-[#d9dadb] p-5 rounded-[50%] animate-modal-icon">
@@ -12,7 +14,7 @@ export default function Modal(props) {
         </div>
 
         <form
-          action={props.handleModalSubmit}
+          action={props.onclick}
           className="flex flex-col justify-center animate-modal-form w-[calc(100%-20px)]"
         >
           <label
@@ -29,7 +31,12 @@ export default function Modal(props) {
             name="userName"
             className="animate-modal-input border rounded-sm px-3 py-2 border-[#3525cd]"
           />
-          <button type="submit" className="submitUserNameBtn text-white mt-3 bg-[#3525cd] rounded py-2 cursor-pointer hover:scale-101 active:scale-95 transition-all ease-in-out">Get Started</button>
+          <button
+            type="submit"
+            className={`submitUserNameBtn text-white mt-3 bg-[#3525cd] rounded py-2 cursor-pointer hover:scale-101 active:scale-95 transition-all ease-in-out ${props.shakeButton}`}
+          >
+            Get Started
+          </button>
         </form>
       </div>
     </section>

@@ -1,32 +1,38 @@
 import SideBar from "./components/SideBar";
 import Editor from "./components/Editor";
 import Modal from "./components/Modal";
-import React from "react";
+import React, { useState } from "react";
 
 export default function App() {
-  const [showModal, setShowModal] = React.useState(true);
-  const [userId, setUserId] = React.useState(localStorage.getItem("userName"));
-  // const [data, setData] = React.useState(localStorage.getItem('data') || localStorage.setItem('data'))
+  const noteObj = localStorage.getItem("notesData") || [];
 
+  const [userId, setUserId] = React.useState(localStorage.getItem("userName"));
+  const [shakeButton, setShakeButton] = useState("");
+
+  console.log(noteObj);
 
   function handleModalSubmit(event) {
     if (event.get("userName").trim() === "") {
-      document.querySelector(".submitUserNameBtn").classList.add("shake");
+      setShakeButton("shake");
       setTimeout(() => {
-        document.querySelector(".submitUserNameBtn").classList.remove("shake");
+        setShakeButton("");
       }, 500);
     } else {
-      localStorage.setItem("userName", event.get("userName").toUpperCase());
-      setShowModal(false);
-      setUserId(event.get("userName").toUpperCase());
+      const capitalizedName =
+        event.get("userName").at(0).toUpperCase() +
+        event
+          .get("userName")
+          .slice(1, event.get("userName").length)
+          .toLowerCase();
+      localStorage.setItem("userName", capitalizedName);
+      setUserId(capitalizedName);
     }
   }
-
 
   return (
     <div className="flex">
       {userId ? null : (
-        <Modal onclick={handleModalSubmit} showModal={showModal} />
+        <Modal onclick={handleModalSubmit} shakeButton={shakeButton} />
       )}
       <SideBar userId={userId} />
       <Editor />
