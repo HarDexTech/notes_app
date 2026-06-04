@@ -1,7 +1,7 @@
 export default function Modal(props) {
   return (
     <section
-      className={`modal animate-modal-overlay h-screen w-full flex items-center justify-center fixed z-10 bg-[#111518]/60`}
+      className={`modal animate-modal-overlay h-screen w-full flex items-center justify-center fixed z-100 bg-[#111518]/60`}
     >
       <div className="h-fit w-[80vw] sm:w-100 bg-white shadow rounded-2xl flex flex-col items-center pb-20 pt-10 px-5 justify-around gap-5 animate-modal-panel">
         <div className="flex flex-col items-center">

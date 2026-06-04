@@ -2,9 +2,9 @@
 
 export default function SideBar(props) {
   return (
-    <aside className="sm:w-75 w-[50%] overflow-hidden border-r-2 border-[#3525cd] h-screen flex flex-col gap-5 shadow-lg">
+    <aside className="w-fit overflow-hidden border-r-2 border-blue-500 h-screen flex flex-col gap-5 shadow-lg z-10 bg-white">
       <div className="ml-2">
-        <h1 className="text-[#3525cd] text-[24px] font-bold tracking-tight">
+        <h1 className="text-blue-500 text-[24px] font-bold tracking-tight">
           ZenNote
         </h1>
         <p className="text-md tracking-tight font-bold text-lg">
@@ -27,7 +27,8 @@ export default function SideBar(props) {
           </div>
           <button
             type="button"
-            className="bg-[#3525cd] w-[calc(100%-20px)] rounded-[5px] py-2 cursor-pointer hover:scale-101 active:scale-95 transition-all ease-in-out text-white"
+            onClick={props.createNewNote}
+            className="bg-blue-500 w-[calc(100%-20px)] rounded-[5px] py-2 cursor-pointer hover:scale-101 active:scale-95 transition-all ease-in-out text-white"
           >
             + New Note
           </button>

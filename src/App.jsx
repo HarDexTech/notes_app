@@ -1,15 +1,32 @@
 import SideBar from "./components/SideBar";
 import Editor from "./components/Editor";
 import Modal from "./components/Modal";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function App() {
-  const noteObj = localStorage.getItem("notesData") || [];
-
-  const [userId, setUserId] = React.useState(localStorage.getItem("userName"));
+  const [noteObj, setNoteObj] = useState(handleNoteObj);
+  const [activeNoteId, setActiveNoteId] = useState(null);
+  const [userId, setUserId] = useState(localStorage.getItem("userName"));
   const [shakeButton, setShakeButton] = useState("");
 
-  console.log(noteObj);
+  function handleNoteObj() {
+    if (!localStorage.getItem("notesData")) return [];
+    else return JSON.parse(localStorage.getItem("notesData"));
+  }
+
+  function createNote() {
+    let currNoteObj = {
+      title: "",
+      content: "",
+      id: crypto.randomUUID(),
+      dateLastUpdated: Date.now(),
+    };
+    setNoteObj((prev) => [...prev, currNoteObj]);
+    setActiveNoteId(currNoteObj.id);
+  }
+  useEffect(() => {
+    localStorage.setItem("notesData", JSON.stringify(noteObj));
+  }, [noteObj]);
 
   function handleModalSubmit(event) {
     if (event.get("userName").trim() === "") {
@@ -34,8 +51,8 @@ export default function App() {
       {userId ? null : (
         <Modal onclick={handleModalSubmit} shakeButton={shakeButton} />
       )}
-      <SideBar userId={userId} />
-      <Editor />
+      <SideBar userId={userId} createNewNote={createNote} />
+      <Editor noteObj={noteObj} activeNoteId={activeNoteId}/>
     </div>
   );
 }

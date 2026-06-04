@@ -4,13 +4,34 @@
 * {
   font-family: "Inter", sans-serif;
 }
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #408cff transparent;
+  scroll-behavior: smooth;
+}
+button {
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+button:hover {
+  opacity: 0.9;
+  scale: 1.03;
+}
+button:active {
+  opacity: 0.8;
+  scale: 0.95;
+}
 body {
   overflow-x: hidden;
 }
-input {
+input,
+textarea {
   outline: none;
 }
-
+textarea {
+  resize: none;
+  scrollbar-width: thin;
+}
 .animate-modal-overlay {
   animation: modalOverlayIn 220ms ease-out both;
 }
@@ -119,5 +140,4 @@ input {
 }
 .noteContainer {
   scrollbar-width: none;
-  scrollbar-color: #3525cd transparent;
 }
