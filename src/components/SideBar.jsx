@@ -1,6 +1,12 @@
 // import React from "react";
+import NoteButton from "./NoteButton";
 
 export default function SideBar(props) {
+  let notesArray = props.noteObj.map((item) => {
+    return (
+      <NoteButton key={item.id} note={item}/>
+    );
+  });
   return (
     <aside className="w-fit overflow-hidden border-r-2 border-blue-500 h-screen flex flex-col gap-5 shadow-lg z-10 bg-white">
       <div className="ml-2">
@@ -40,10 +46,9 @@ export default function SideBar(props) {
       </span>
       {/* show all note file and a 'oops, no files found' message when nothing is displayed */}
       <div className="noteContainer ml-2 pr-2 flex flex-col gap-2 h-fit overflow-auto pb-5">
-        No, notes found!
+        {props.noteObj.length === 0 && "No notes found!"}
+        {notesArray}
       </div>
     </aside>
   );
 }
-//note button in side bar
-//className="w-[calc(100%-20px)] text-left px-3 py-2 rounded-md border border-[#d9dadb] hover:bg-[#f6f6ff] hover:border-[#3525cd] transition-all ease-in-out"

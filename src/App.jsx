@@ -4,19 +4,17 @@ import Modal from "./components/Modal";
 import { useState, useEffect } from "react";
 
 export default function App() {
-  const [noteObj, setNoteObj] = useState(handleNoteObj);
+  // localStorage.clear()
+  const [noteObj, setNoteObj] = useState(
+    () => JSON.parse(localStorage.getItem("notesData")) ?? [],
+  );
   const [activeNoteId, setActiveNoteId] = useState(null);
   const [userId, setUserId] = useState(localStorage.getItem("userName"));
   const [shakeButton, setShakeButton] = useState("");
 
-  function handleNoteObj() {
-    if (!localStorage.getItem("notesData")) return [];
-    else return JSON.parse(localStorage.getItem("notesData"));
-  }
-
   function createNote() {
     let currNoteObj = {
-      title: "",
+      title: "Untitled Document",
       content: "",
       id: crypto.randomUUID(),
       dateLastUpdated: Date.now(),
@@ -51,8 +49,8 @@ export default function App() {
       {userId ? null : (
         <Modal onclick={handleModalSubmit} shakeButton={shakeButton} />
       )}
-      <SideBar userId={userId} createNewNote={createNote} />
-      <Editor noteObj={noteObj} activeNoteId={activeNoteId}/>
+      <SideBar userId={userId} createNewNote={createNote} noteObj={noteObj}/>
+      <Editor noteObj={noteObj} activeNoteId={activeNoteId} />
     </div>
   );
 }

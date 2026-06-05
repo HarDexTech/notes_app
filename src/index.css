@@ -13,7 +13,7 @@ button {
   cursor: pointer;
   transition: all 150ms ease-in-out;
 }
-button:hover {
+button:hover:not(.noteButton) {
   opacity: 0.9;
   scale: 1.03;
 }
@@ -139,5 +139,5 @@ textarea {
   }
 }
 .noteContainer {
-  scrollbar-width: none;
+  scrollbar-width: thin;
 }
