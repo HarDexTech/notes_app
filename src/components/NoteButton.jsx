@@ -1,6 +1,8 @@
 export default function NoteButton(props) {
-    const [hour, min] = new Date(props.note.dateLastUpdated).toTimeString().split(':');
-    const dateString = new Date(props.note.dateLastUpdated).toDateString();
+  const [hour, min] = new Date(props.note.dateLastUpdated)
+    .toTimeString()
+    .split(":");
+  const dateString = new Date(props.note.dateLastUpdated).toDateString();
   return (
     <button
       type="button"
@@ -10,9 +12,9 @@ export default function NoteButton(props) {
       <div className="flex flex-col">
         <span className="font-medium">{props.note.title}</span>
         <span className="text-xs text-gray-400">
-            Last Updated:
-            <p>{`${hour}:${min}, ${dateString}`}</p>
-            </span>
+          Last Updated:
+          <p>{`${hour}:${min}, ${dateString}`}</p>
+        </span>
       </div>
       <div
         onClick={(e) => e.stopPropagation()}

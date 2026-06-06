@@ -4,7 +4,7 @@ import NoteButton from "./NoteButton";
 export default function SideBar(props) {
   let notesArray = props.noteObj.map((item) => {
     return (
-      <NoteButton key={item.id} note={item}/>
+      <NoteButton key={item.id} note={item} onSelect={props.onSelect}/>
     );
   });
   return (

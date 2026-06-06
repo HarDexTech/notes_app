@@ -12,6 +12,10 @@ export default function App() {
   const [userId, setUserId] = useState(localStorage.getItem("userName"));
   const [shakeButton, setShakeButton] = useState("");
 
+  function onSelect(id) {
+    setActiveNoteId(id);
+  }
+
   function createNote() {
     let currNoteObj = {
       title: "Untitled Document",
@@ -49,7 +53,12 @@ export default function App() {
       {userId ? null : (
         <Modal onclick={handleModalSubmit} shakeButton={shakeButton} />
       )}
-      <SideBar userId={userId} createNewNote={createNote} noteObj={noteObj}/>
+      <SideBar
+        userId={userId}
+        createNewNote={createNote}
+        noteObj={noteObj}
+        onSelect={onSelect}
+      />
       <Editor noteObj={noteObj} activeNoteId={activeNoteId} />
     </div>
   );
