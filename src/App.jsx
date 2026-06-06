@@ -16,6 +16,28 @@ export default function App() {
     setActiveNoteId(id);
   }
 
+  function updateNoteTitle(id, newTitle) {
+    setNoteObj((prev) =>
+      prev.map((note) => {
+        if (note.id === id) {
+          return { ...note, title: newTitle };
+        }
+        return note;
+      }),
+    );
+  }
+
+  function updateNoteContent(id, newContent) {
+    setNoteObj((prevObj) =>
+      prevObj.map((item) => {
+        if (item.id === id) {
+          return { ...item, content: newContent };
+        }
+        return item;
+      }),
+    );
+  }
+
   function createNote() {
     let currNoteObj = {
       title: "Untitled Document",
@@ -59,7 +81,12 @@ export default function App() {
         noteObj={noteObj}
         onSelect={onSelect}
       />
-      <Editor noteObj={noteObj} activeNoteId={activeNoteId} />
+      <Editor
+        noteObj={noteObj}
+        activeNoteId={activeNoteId}
+        changeTitle={updateNoteTitle}
+        changeContent={updateNoteContent}
+      />
     </div>
   );
 }

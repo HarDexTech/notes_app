@@ -1,13 +1,17 @@
+import { useState } from "react";
 import note from "../assets/images.jpg";
 export default function Editor(props) {
-  let childNoteObj = props.noteObj.find(x => x.id === props.activeNoteId);
-  console.log(childNoteObj);
+  const childNoteObj = props.noteObj.find((char) => char.id === props.activeNoteId);
   return (
     <section className="pt-5 pl-3 h-screen w-[calc(100%-300px)] flex items-center justify-center flex-col">
       {/* show msg for new screen */}
       {!props.activeNoteId ? (
         <div className="flex items-center flex-col">
-          <img src={note} alt="note" className="pointer-events-none select-none"/>
+          <img
+            src={note}
+            alt="note"
+            className="pointer-events-none select-none"
+          />
           <h1 className="font-bold text-lg">Your canvas await</h1>
           <p>Click a note to view it or tap anywhere to create a new note</p>
         </div>
@@ -40,6 +44,7 @@ export default function Editor(props) {
               name="title"
               className="border rounded p-3 text-[24px] font-bold max-w-200"
               value={childNoteObj.title}
+              onChange={(e) => props.changeTitle(props.activeNoteId, e.target.value)}
             />
           </div>
           <div className="flex flex-col">
@@ -53,6 +58,8 @@ export default function Editor(props) {
               name="content"
               id="content"
               className="border rounded p-3 h-[70vh]"
+              value={childNoteObj.content}
+              onChange={(e) => props.changeContent(props.activeNoteId, e.target.value)}
             ></textarea>
           </div>
         </form>
