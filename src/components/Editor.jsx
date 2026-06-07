@@ -1,12 +1,27 @@
 import { useState } from "react";
 import note from "../assets/images.jpg";
 export default function Editor(props) {
-  const childNoteObj = props.noteObj.find((char) => char.id === props.activeNoteId);
+  const childNoteObj = props.noteObj.find(
+    (char) => char.id === props.activeNoteId,
+  );
+  function deleteNote() {
+    props.noteObj.forEach((child) => {
+      if (child.id === props.activeNoteId) {
+        let updatedNoteObj = props.noteObj.filter(
+          (sibling) => sibling.id !== props.activeNoteId,
+        );
+        props.handleDel(updatedNoteObj);
+      }
+    });
+  }
   return (
     <section className="pt-5 pl-3 h-screen w-[calc(100%-300px)] flex items-center justify-center flex-col">
       {/* show msg for new screen */}
       {!props.activeNoteId ? (
-        <div className="flex items-center flex-col">
+        <div
+          className="flex items-center flex-col h-screen w-full justify-center"
+          onClick={props.createNewNote}
+        >
           <img
             src={note}
             alt="note"
@@ -18,14 +33,10 @@ export default function Editor(props) {
       ) : (
         <form action="" className="w-full h-full">
           <div className="flex gap-2 w-full justify-end">
+            {/* delete button */}
             <button
               type="button"
-              className="py-4 px-5 rounded bg-blue-500 text-white"
-            >
-              <i className="fa-regular fa-floppy-disk"></i>
-            </button>
-            <button
-              type="button"
+              onClick={deleteNote}
               className="py-4 px-5 rounded bg-blue-500 text-white"
             >
               <i className="fa-solid fa-trash"></i>
@@ -44,7 +55,9 @@ export default function Editor(props) {
               name="title"
               className="border rounded p-3 text-[24px] font-bold max-w-200"
               value={childNoteObj.title}
-              onChange={(e) => props.changeTitle(props.activeNoteId, e.target.value)}
+              onChange={(e) =>
+                props.changeTitle(props.activeNoteId, e.target.value)
+              }
             />
           </div>
           <div className="flex flex-col">
@@ -59,7 +72,9 @@ export default function Editor(props) {
               id="content"
               className="border rounded p-3 h-[70vh]"
               value={childNoteObj.content}
-              onChange={(e) => props.changeContent(props.activeNoteId, e.target.value)}
+              onChange={(e) =>
+                props.changeContent(props.activeNoteId, e.target.value)
+              }
             ></textarea>
           </div>
         </form>

@@ -2,10 +2,12 @@
 import NoteButton from "./NoteButton";
 
 export default function SideBar(props) {
-  let notesArray = props.noteObj.map((item) => {
-    return (
-      <NoteButton key={item.id} note={item} onSelect={props.onSelect}/>
-    );
+  let noteObj = [...props.noteObj].sort(
+    (a, b) => b.dateLastUpdated - a.dateLastUpdated,
+  );
+
+  let notesArray = noteObj.map((item) => {
+    return <NoteButton key={item.id} note={item} onSelect={props.onSelect} />;
   });
   return (
     <aside className="w-fit overflow-hidden border-r-2 border-blue-500 h-screen flex flex-col gap-5 shadow-lg z-10 bg-white">

@@ -4,7 +4,6 @@ import Modal from "./components/Modal";
 import { useState, useEffect } from "react";
 
 export default function App() {
-  // localStorage.clear()
   const [noteObj, setNoteObj] = useState(
     () => JSON.parse(localStorage.getItem("notesData")) ?? [],
   );
@@ -20,7 +19,7 @@ export default function App() {
     setNoteObj((prev) =>
       prev.map((note) => {
         if (note.id === id) {
-          return { ...note, title: newTitle };
+          return { ...note, title: newTitle, dateLastUpdated: Date.now() };
         }
         return note;
       }),
@@ -31,7 +30,7 @@ export default function App() {
     setNoteObj((prevObj) =>
       prevObj.map((item) => {
         if (item.id === id) {
-          return { ...item, content: newContent };
+          return { ...item, content: newContent, dateLastUpdated: Date.now() };
         }
         return item;
       }),
@@ -48,6 +47,12 @@ export default function App() {
     setNoteObj((prev) => [...prev, currNoteObj]);
     setActiveNoteId(currNoteObj.id);
   }
+
+  function updateNoteAndClearActiveId (arr) {
+    setActiveNoteId(null);
+    setNoteObj(arr);
+  }
+
   useEffect(() => {
     localStorage.setItem("notesData", JSON.stringify(noteObj));
   }, [noteObj]);
@@ -83,9 +88,11 @@ export default function App() {
       />
       <Editor
         noteObj={noteObj}
+        createNewNote={createNote}
         activeNoteId={activeNoteId}
         changeTitle={updateNoteTitle}
         changeContent={updateNoteContent}
+        handleDel={updateNoteAndClearActiveId}
       />
     </div>
   );
