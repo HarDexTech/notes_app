@@ -16,12 +16,6 @@ export default function NoteButton(props) {
           <p>{`${hour}:${min}, ${dateString}`}</p>
         </span>
       </div>
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="bg-blue-500 w-5 text-center rounded h-fit"
-      >
-        <i className="fa-solid fa-ellipsis-vertical text-white"></i>
-      </div>
     </button>
   );
 }

@@ -10,9 +10,14 @@ export default function App() {
   const [activeNoteId, setActiveNoteId] = useState(null);
   const [userId, setUserId] = useState(localStorage.getItem("userName"));
   const [shakeButton, setShakeButton] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   function onSelect(id) {
     setActiveNoteId(id);
+  }
+
+  function updateSearchText(value) {
+    setSearchText(value);
   }
 
   function updateNoteTitle(id, newTitle) {
@@ -47,12 +52,6 @@ export default function App() {
     setNoteObj((prev) => [...prev, currNoteObj]);
     setActiveNoteId(currNoteObj.id);
   }
-
-  function updateNoteAndClearActiveId (arr) {
-    setActiveNoteId(null);
-    setNoteObj(arr);
-  }
-
   useEffect(() => {
     localStorage.setItem("notesData", JSON.stringify(noteObj));
   }, [noteObj]);
@@ -75,6 +74,14 @@ export default function App() {
     }
   }
 
+  function deleteNote() {
+    let updatedNoteObj = noteObj.filter(
+      (sibling) => sibling.id !== activeNoteId,
+    );
+    setActiveNoteId(null);
+    setNoteObj(updatedNoteObj);
+  }
+
   return (
     <div className="flex">
       {userId ? null : (
@@ -85,6 +92,8 @@ export default function App() {
         createNewNote={createNote}
         noteObj={noteObj}
         onSelect={onSelect}
+        searchText={searchText}
+        updateSearchText={updateSearchText}
       />
       <Editor
         noteObj={noteObj}
@@ -92,7 +101,7 @@ export default function App() {
         activeNoteId={activeNoteId}
         changeTitle={updateNoteTitle}
         changeContent={updateNoteContent}
-        handleDel={updateNoteAndClearActiveId}
+        handleDel={deleteNote}
       />
     </div>
   );

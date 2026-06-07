@@ -4,16 +4,7 @@ export default function Editor(props) {
   const childNoteObj = props.noteObj.find(
     (char) => char.id === props.activeNoteId,
   );
-  function deleteNote() {
-    props.noteObj.forEach((child) => {
-      if (child.id === props.activeNoteId) {
-        let updatedNoteObj = props.noteObj.filter(
-          (sibling) => sibling.id !== props.activeNoteId,
-        );
-        props.handleDel(updatedNoteObj);
-      }
-    });
-  }
+  
   return (
     <section className="pt-5 pl-3 h-screen w-[calc(100%-300px)] flex items-center justify-center flex-col">
       {/* show msg for new screen */}
@@ -36,7 +27,7 @@ export default function Editor(props) {
             {/* delete button */}
             <button
               type="button"
-              onClick={deleteNote}
+              onClick={props.handleDel}
               className="py-4 px-5 rounded bg-blue-500 text-white"
             >
               <i className="fa-solid fa-trash"></i>

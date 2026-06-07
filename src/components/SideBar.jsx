@@ -1,4 +1,4 @@
-// import React from "react";
+import React, { useEffect } from "react";
 import NoteButton from "./NoteButton";
 
 export default function SideBar(props) {
@@ -6,7 +6,14 @@ export default function SideBar(props) {
     (a, b) => b.dateLastUpdated - a.dateLastUpdated,
   );
 
-  let notesArray = noteObj.map((item) => {
+  //set filtered to note data structure when searchtext is not empty and when it is return original data
+  let filteredNotes =
+    props.searchText.trim() !== ""
+      ? noteObj.filter((item) => item.title.includes(props.searchText))
+      : noteObj;
+  
+  // map over filtered notes
+  let notesArray = filteredNotes.map((item) => {
     return <NoteButton key={item.id} note={item} onSelect={props.onSelect} />;
   });
   return (
@@ -23,16 +30,20 @@ export default function SideBar(props) {
       <div className="flex justify-center ml-2">
         <form action="" className="flex flex-col w-full">
           <div className="flex flex-col w-full">
+            {/* search notes */}
             <label htmlFor="searchNote" className="ml-1">
               <i className="fa fa-search"></i>
             </label>
             <input
               id="searchNote"
               type="text"
+              value={props.searchText}
+              onChange={(e) => props.updateSearchText(e.target.value)}
               placeholder="Search notes..."
               className="relative -top-8 border border-[#d9dadb] py-2 w-[calc(100%-20px)] px-6 rounded-[5px]"
             />
           </div>
+          {/* create new note */}
           <button
             type="button"
             onClick={props.createNewNote}
