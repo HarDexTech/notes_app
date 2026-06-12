@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
 import NoteButton from "./NoteButton";
+import { useState } from "react";
 
 export default function SideBar(props) {
+  const [isNoteActive, setNoteActive] = useState(false);
   let noteObj = [...props.noteObj].sort(
     (a, b) => b.dateLastUpdated - a.dateLastUpdated,
   );
@@ -11,13 +12,22 @@ export default function SideBar(props) {
     props.searchText.trim() !== ""
       ? noteObj.filter((item) => item.title.includes(props.searchText))
       : noteObj;
-  
+
   // map over filtered notes
   let notesArray = filteredNotes.map((item) => {
-    return <NoteButton key={item.id} note={item} onSelect={props.onSelect} />;
+    return (
+      <NoteButton
+        key={item.id}
+        note={item}
+        onSelect={props.onSelect}
+        activeId={props.activeNoteId}
+      />
+    );
   });
   return (
-    <aside className="w-fit overflow-hidden border-r-2 border-blue-500 h-screen flex flex-col gap-5 shadow-lg z-10 bg-white">
+    <aside
+      className={`sidebar fixed inset-y-0 left-0 z-10 flex h-screen w-[85vw] max-w-80 shrink-0 flex-col gap-5 overflow-auto overflow-x-hidden border-r-2 border-blue-500 bg-white shadow-lg transition-transform duration-300 ease-in-out ${props.menuStatus ? "translate-x-0" : "-translate-x-full pointer-events-none"} md:static md:inset-auto md:w-80 md:translate-x-0 md:pointer-events-auto`}
+    >
       <div className="ml-2">
         <h1 className="text-blue-500 text-[24px] font-bold tracking-tight">
           ZenNote
@@ -59,7 +69,7 @@ export default function SideBar(props) {
       </span>
       {/* show all note file and a 'oops, no files found' message when nothing is displayed */}
       <div className="noteContainer ml-2 pr-2 flex flex-col gap-2 h-fit overflow-auto pb-5">
-        {props.noteObj.length === 0 && "No notes found!"}
+        {filteredNotes.length === 0 && "No notes found!"}
         {notesArray}
       </div>
     </aside>

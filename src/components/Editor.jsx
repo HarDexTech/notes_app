@@ -4,15 +4,22 @@ export default function Editor(props) {
   const childNoteObj = props.noteObj.find(
     (char) => char.id === props.activeNoteId,
   );
-  
+
   return (
-    <section className="pt-5 pl-3 h-screen w-[calc(100%-300px)] flex items-center justify-center flex-col">
+    <section className="py-5 px-3 h-screen editor flex flex-1 min-w-0 w-full items-center justify-center flex-col">
       {/* show msg for new screen */}
       {!props.activeNoteId ? (
         <div
           className="flex items-center flex-col h-screen w-full justify-center"
           onClick={props.createNewNote}
         >
+          <button
+            type="button"
+            className={`menuToggleButton md:hidden ${props.menuStatus ? "menuToggleButton--anchored" : ""} z-20`}
+            onClick={props.changeMenuStatus}
+          >
+            <i className="fa-solid fa-bars text-blue-500 text-[20px] font-bold"></i>
+          </button>
           <img
             src={note}
             alt="note"
@@ -24,6 +31,13 @@ export default function Editor(props) {
       ) : (
         <form action="" className="w-full h-full">
           <div className="flex gap-2 w-full justify-end">
+            <button
+              type="button"
+              className={`menuToggleButton md:hidden ${props.menuStatus ? "menuToggleButton--anchored" : ""}`}
+              onClick={props.changeMenuStatus}
+            >
+              <i className="fa-solid fa-bars text-blue-500 text-[20px] font-bold"></i>
+            </button>
             {/* delete button */}
             <button
               type="button"

@@ -11,9 +11,16 @@ export default function App() {
   const [userId, setUserId] = useState(localStorage.getItem("userName"));
   const [shakeButton, setShakeButton] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [menuStatus, setMenuStatus] = useState(false)
 
   function onSelect(id) {
     setActiveNoteId(id);
+    setMenuStatus(false);
+  }
+
+  function changeMenuStatus (event) {
+    event.stopPropagation();
+    setMenuStatus(prev => !prev)
   }
 
   function updateSearchText(value) {
@@ -89,18 +96,22 @@ export default function App() {
       )}
       <SideBar
         userId={userId}
+        activeNoteId={activeNoteId}
         createNewNote={createNote}
         noteObj={noteObj}
         onSelect={onSelect}
         searchText={searchText}
         updateSearchText={updateSearchText}
+        menuStatus={menuStatus}
       />
       <Editor
         noteObj={noteObj}
+        changeMenuStatus={changeMenuStatus}
         createNewNote={createNote}
         activeNoteId={activeNoteId}
         changeTitle={updateNoteTitle}
         changeContent={updateNoteContent}
+        menuStatus={menuStatus}
         handleDel={deleteNote}
       />
     </div>
