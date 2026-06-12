@@ -1,8 +1,6 @@
 import NoteButton from "./NoteButton";
-import { useState } from "react";
 
 export default function SideBar(props) {
-  const [isNoteActive, setNoteActive] = useState(false);
   let noteObj = [...props.noteObj].sort(
     (a, b) => b.dateLastUpdated - a.dateLastUpdated,
   );

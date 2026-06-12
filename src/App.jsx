@@ -58,6 +58,7 @@ export default function App() {
     };
     setNoteObj((prev) => [...prev, currNoteObj]);
     setActiveNoteId(currNoteObj.id);
+    setMenuStatus(false);
   }
   useEffect(() => {
     localStorage.setItem("notesData", JSON.stringify(noteObj));
